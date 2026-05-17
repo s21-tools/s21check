@@ -7,13 +7,13 @@ School 21 C project checker: `clang-format`, `s21lint`, `cppcheck`, and Valgrind
 **macOS / Linux:**
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kathlind/s21check/main/install.sh | bash
+later
 ```
 
 If `s21check` is not found after installation, add the local binary directory to your shell config:
 
 ```sh
-export PATH="$HOME/.local/bin:$PATH"
+later
 ```
 
 For Zsh, add it to `~/.zshrc`. For Bash, add it to `~/.bashrc` or `~/.bash_profile`.
@@ -116,7 +116,7 @@ npm install --global @s21toolkit/lint
 ## Uninstall
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kathlind/s21check/main/uninstall.sh | bash
+later
 ```
 
 ## Contributing
