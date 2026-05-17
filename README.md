@@ -1,22 +1,62 @@
 # s21check
-THIS PROJECT IN BETA
-School 21 C project checker: `clang-format`, `s21lint`, `cppcheck`, and Valgrind in one command.
 
-## Installation
+School 21 C project checker
 
-**macOS / Linux:**
+It helps you quickly run the most common local checks before pushing your project:
+`clang-format`, `s21lint`, `cppcheck`, and Valgrind inside Docker or Podman.
 
+> This project is in beta. Some checks may be improved or changed in future versions.
+
+## Package manager installation
+
+**Brew**
+install:
 ```sh
-later
+brew tap s21-tools/s21-tools
+brew install s21check
+```
+uninstall:
+```sh
+brew uninstall s21check
 ```
 
-If `s21check` is not found after installation, add the local binary directory to your shell config:
+---
 
-```sh
-later
+### macOS / Linux installer
+
+You can also install `s21check` without a package manager, for example on School 21 ARM machines:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/s21-tools/s21check/main/install.sh | bash
 ```
 
-For Zsh, add it to `~/.zshrc`. For Bash, add it to `~/.bashrc` or `~/.bash_profile`.
+If `s21check` is not found after installation, add `~/.local/bin` to your `PATH`.
+
+For Zsh:
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+For Bash:
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+Check installation:
+
+```bash
+s21check help
+```
+
+Uninstall:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/s21-tools/s21check/main/uninstall.sh | bash
+```
 
 ## Usage
 
@@ -30,7 +70,6 @@ s21check lint                    # s21lint only
 s21check static                  # cppcheck only
 s21check valgrind <test-binary>  # Valgrind inside a Docker/Podman container
 s21check doctor                  # check required dependencies
-s21check --debug <command>       # run any command with verbose step output
 ```
 
 ## Commands
@@ -113,25 +152,18 @@ Install `s21lint`:
 npm install --global @s21toolkit/lint
 ```
 
-## Uninstall
-
-```sh
-later
-```
-
 ## Contributing
 
 Bug reports and pull requests are welcome. Please open an issue first to discuss what you would like to change.
 
 When contributing:
 
-- keep scripts compatible with Bash 3.2+ because it is the default Bash version on macOS;
-- run `shellcheck` on any modified shell scripts before submitting;
+- keep scripts compatible with Bash 3.2+ because it is the default Bash version on most systems;
 - test on both macOS and Linux, if possible.
 
 ## Bugs
 
-Found something broken? Open an issue at [github.com/kathlind/s21check/issues](https://github.com/kathlind/s21check/issues) and include:
+Found something broken? Open an issue at [github.com/s21-tools/s21check/issues](https://github.com/s21-tools/s21check/issues) and include:
 
 - your OS and Bash version (`bash --version`);
 - the command you ran;
