@@ -1,0 +1,40 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  notify-tap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: get version
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: compute sha256
+        id: sha
+        run: |
+          URL="https://github.com/${{ github.repository }}/archive/refs/tags/${{ github.ref_name }}.tar.gz"
+          SHA=$(curl -sL "$URL" | shasum -a 256 | awk '{print $1}')
+          echo "sha256=$SHA" >> $GITHUB_OUTPUT
+          echo "url=$URL" >> $GITHUB_OUTPUT
+
+      - name: trigger tap update
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.TAP_GITHUB_TOKEN }}
+
+          repository: s21-tools/homebrew-s21-tools
+
+          event-type: formula-update
+
+          client-payload: |
+            {
+              "formula": "s21check",
+              "version": "${{ steps.version.outputs.version }}",
+              "url": "${{ steps.sha.outputs.url }}",
+              "sha256": "${{ steps.sha.outputs.sha256 }}"
+            }
