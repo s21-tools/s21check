@@ -22,7 +22,7 @@ brew uninstall s21check
 
 ---
 
-### macOS / Linux installer
+## macOS / Linux installer
 
 You can also install `s21check` without a package manager, for example on School 21 ARM machines:
 
