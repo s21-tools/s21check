@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+
+source "$ROOT_DIR/lib/log.sh"
+source "$ROOT_DIR/lib/utils.sh"
+source "$ROOT_DIR/lib/project.sh"
+source "$ROOT_DIR/lib/usage.sh"
+source "$ROOT_DIR/lib/doctor.sh"
+source "$ROOT_DIR/lib/checks.sh"
+source "$ROOT_DIR/lib/docker.sh"
+
+main() {
+	if [[ "${1:-}" == "--debug" ]]; then
+		set -x
+		shift
+	fi
+	local command="${1:-default}"
+
+	case "$command" in
+		default)
+			run_checks
+			;;
+
+		all)
+			run_all_checks
+			;;
+
+		format)
+			check_format
+			;;
+
+		static)
+			check_static
+			;;
+
+		lint)
+			check_lint
+			;;
+
+		valgrind)
+			shift
+			run_docker_valgrind "$@"
+			;;
+
+		doctor)
+			doctor
+			;;
+
+		help|-h|--help)
+			usage
+			;;
+
+		*)
+			log_err "unknown command: $command"
+			usage
+			exit 2
+			;;
+	esac
+}
+
+main "$@"

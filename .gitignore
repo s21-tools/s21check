@@ -1,0 +1,14 @@
+.DS_Store
+*.log
+valgrind.log
+*.out
+*.o
+*.a
+*.so
+*.dylib
+*.gcda
+*.gcno
+*.gcov
+coverage/
+build/
+dist/
